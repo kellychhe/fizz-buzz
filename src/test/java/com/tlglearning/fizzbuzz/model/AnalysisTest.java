@@ -10,11 +10,11 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 class AnalysisTest {
 
-  final Analysis analysis = new Analysis();
   static final Set<State> fizzExpected = EnumSet.of(State.FIZZ);
   static final Set<State> buzzExpected = EnumSet.of(State.BUZZ);
   static final Set<State> fizzBuzzExpected = EnumSet.of(State.FIZZ, State.BUZZ);
   static final Set<State> neitherExpected = EnumSet.noneOf(State.class);
+  final Analysis analysis = new Analysis();
 
 
   @ParameterizedTest
@@ -44,13 +44,7 @@ class AnalysisTest {
   @ParameterizedTest
   @ValueSource(ints = {-1, -3, -5, -15})
   void  analyze_negative(int value) {
-    try {
-      analysis.analyze(value);
-      fail();
-    } catch (IllegalArgumentException e) {
-      //Do nothing; this is the expected behavior;
+      assertThrows(IllegalArgumentException.class, new InvalidInvocation(analysis, value));
     }
+
   }
-
-
-}
